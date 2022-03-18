@@ -299,7 +299,8 @@ public class Computer4{
        Computer4 computer=null; // we are initialising the reference variable with null which means currently the reference variable is not storing the address of any object.
        computer=new Laptop4();  // The Computer and Laptop are having parent child relationship
        Laptop4 laptop=(Laptop)computer; // Casting
-       laptop.processing();   
+       //((Laptop)computer).processing(); 
+      laptop.processing();   
      }
   }
 
@@ -331,5 +332,49 @@ public class Computer5{
        laptop.processing();   
      }
   }
+---------------------------------------------
+Computer computer=new Computer();
+Computer computer2=computer;
+---------------------------------------------------------------------------------------
 
+public class Base6 {
+   public void disp(){
+    System.out.println("I am the base class display method");
+   }
+}
 
+public class Derived6 extends Base6{
+  public void disp() {
+    super.disp(); // super is a keyword which is used to represent the immediate parent class
+    System.out.println("I am the derived class display method");
+   }
+}
+
+public class Main6{
+   public static void main(String args[]) {
+      Derived6 derived=new Derived6();
+      derived.disp();
+   }
+ }
+-----------------------------------
+
+  public class BaseA {
+    public void disp(){
+   
+    }
+  }
+ 
+ public class BaseB extends BaseA {
+   public void disp(){
+   super.disp();
+  }
+}
+
+  public class Derived extends BaseB {
+   public void disp() {
+   super.super.disp();  // This way is not correct
+   super.disp();
+  }
+ }
+-----------------------------------------------------------------------------------------
+  
