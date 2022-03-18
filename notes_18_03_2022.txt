@@ -939,3 +939,92 @@ class Tester {
 ---------------------------------------------
 The classes like String and Wrapper classes are final classes.
 ---------------------------------------------------------------------------------
+A method without a body is called as an abstract method.
+A class containing atleast one abstract method needs to be declared as an
+abstract class.
+A subclass which is extending/inheriting the abstract needs to implement the
+abstract method.
+abstract keyword is used only with method and class. It is not used with the variables.
+We cannot create an object of abstract class. That means if my abstract class is Base.
+We cannot write
+     Base base=new Base(); 
+The reason is abstract clas is incomplete it is having some methods
+without a body. So if we are allowed to create an object of abstract
+class, there will be a challenge in executing the abstract method(
+because abstract method don't have a body to execute)
+
+   Example:
+
+   abstract public class Base {
+   
+       abstract public void abstractDemo();
+       
+        public void display(){
+        System.out.println("Hello from abstract class method");
+       }    
+ 
+   } 
+
+
+   public class Derived extends Base {
+     // So implementation of the abstract method is mandatory in the subclass
+      public void abstractDemo(){
+       System.out.println("I am the implementation of the abstract method in the subclass");
+     }
+    // The subclass can have its own method which is not present in the base class   
+     public void derivedDisplay(){
+      System.out.println("I am the display method of the Derived class");
+     }
+    }
+
+    public class AbstractMain{
+     public static void main(String args[]){
+       Base base=new Derived();
+       base.abstractDemo();
+       base.display();
+       //base.derivedDisplay();  // derivedDisplay() we dont have derivedDisplay in the Base class.
+       Derived derived=(Derived)base;
+       derived.derivedDisplay();
+     }
+  }
+-----------------------------
+ abstract public class Base1 {
+   
+       abstract public void abstractDemo();
+       
+        public void display(){
+        System.out.println("Hello from abstract class method");
+       }    
+ 
+   } 
+// If we are not implementing the abstract method in the derived class
+// make the derived class as an abstract class so that to convey that
+// derived class is also incomplete. 
+// That means derived also needs to be implemented. 
+
+   abstract public class Derived1 extends Base1 {
+     // So implementation of the abstract method is mandatory in the subclass
+      
+    // The subclass can have its own method which is not present in the base class   
+     public void derivedDisplay(){
+      System.out.println("I am the display method of the Derived class");
+     }
+    }
+
+    public class AbstractMain1{
+     public static void main(String args[]){
+       
+     }
+  }
+
+----------
+// A class without an abstract method can be declared as an abstract class
+abstract public class Base1 {
+       
+       
+        public void display(){
+        System.out.println("Hello from abstract class method");
+       }    
+ 
+   } 
+----------------------------------
