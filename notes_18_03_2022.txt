@@ -168,3 +168,168 @@ public class Main5{
      System.out.println(res);   
     }
   }
+-------------------------------------------------------------
+Q How the type conversion and casting takes place in Java for reference type?
+A The classes which are having parent child relationship , with those classes we can implement type
+conversion and type casting.Type casting cannot happen between the classes which are not related with
+parent child relationship.
+
+   public class Computer{
+
+   }
+
+   public class Laptop extends Computer {
+
+   }
+
+   public class ComputerMain{
+     public static void main(String args[]){
+       Computer computer=null;
+       computer=new Laptop();  // The Computer and Laptop are having parent child relationship
+     }
+  }
+
+-----------------------------------------------------------------------------------
+
+public class Computer{
+
+   }
+
+   public class Laptop extends Computer {
+
+   }
+
+   public class ComputerMain{
+     public static void main(String args[]){
+       Computer computer=null; // we are initialising the reference variable with null which means currently the reference variable is not storing the address of any object.
+       computer=new Laptop();  // The Computer and Laptop are having parent child relationship
+     }
+  }
+----------------------------------------------------------------------------------------------------
+public class Computer1{
+    public void processing(){
+     System.out.println("Computer will do processing");
+    }
+   }
+
+   public class Laptop1 extends Computer1 {
+   public void processing(){
+     System.out.println("I am the Laptop processor");
+    }
+   }
+
+   public class ComputerMain1{
+     public static void main(String args[]){
+       Computer1 computer=null; // we are initialising the reference variable with null which means currently the reference variable is not storing the address of any object.
+       computer=new Laptop1();  // The Computer and Laptop are having parent child relationship
+       computer.processing(); // It shows I am Laptop processor
+       // The above execution is because of dynamic polymorphism because object is created during the
+      // runtime and when we call processing method after the object creation, first it checks whether
+      // we have processing method in the base class, if the method declaration is present in the
+      // base class, then it checks the derived class as the object is of Derived type. Now if it
+     // is getting the method in the derived class, that derived class method is invoked.
+     }
+  }
+
+Q What will happen if we have a method in the base class but we dont have a similar method in the 
+  Derived class.
+A In that case the base class method will be called.
+
+public class Computer2{
+    public void processing(){
+     System.out.println("Computer will do processing");
+    }
+   }
+
+   public class Laptop2 extends Computer2 {
+  
+   }
+
+   public class ComputerMain2{
+     public static void main(String args[]){
+       Computer2 computer=null; // we are initialising the reference variable with null which means currently the reference variable is not storing the address of any object.
+       computer=new Laptop2();  // The Computer and Laptop are having parent child relationship
+       computer.processing(); // Computer will do processing
+       // The above execution is because of dynamic polymorphism because object is created during the
+      // runtime and when we call processing method after the object creation, first it checks whether
+      // we have processing method in the base class, if the method declaration is present in the
+      // base class, then it checks the derived class as the object is of Derived type. Now if it
+     // is getting the method in the derived class, that derived class method is invoked.
+     }
+  }
+---------------------------------------------------------------------------------------------------
+Q If we have a method which is only in the subclass but we dont have a method in the base class.
+Can we call that method with the reference of base class and object of derived class?
+A No
+
+public class Computer3{
+   
+   }
+
+   public class Laptop3 extends Computer3 {
+     public void processing(){
+     System.out.println("I am the processor of laptop");
+    }
+   }
+
+   public class ComputerMain3{
+     public static void main(String args[]){
+       Computer3 computer=null; // we are initialising the reference variable with null which means currently the reference variable is not storing the address of any object.
+       computer=new Laptop3();  // The Computer and Laptop are having parent child relationship
+       computer.processing();   // In this line we will have compilation error as the method is 
+      // not declared in the Parent class
+     }
+  }
+-----------------------------------------------------------------------------
+Q Do we have any solution for the above challenge?
+A Yes . With type casting.
+
+public class Computer4{
+   
+   }
+
+   public class Laptop4 extends Computer4 {
+     public void processing(){
+     System.out.println("I am the processor of laptop");
+    }
+   }
+
+   public class ComputerMain4{
+     public static void main(String args[]){
+       Computer4 computer=null; // we are initialising the reference variable with null which means currently the reference variable is not storing the address of any object.
+       computer=new Laptop4();  // The Computer and Laptop are having parent child relationship
+       Laptop4 laptop=(Laptop)computer; // Casting
+       laptop.processing();   
+     }
+  }
+
+[In reference type casting is always preceeded by type conversion]
+It is similar to pouring the content of smaller jug into the bigger jug and again pouring the 
+content from bigger jug back to the smaller jug.
+-------------------------------------------------------------------------------------
+// For the following code we wont be getting any compilation error but we will get Runtime error
+Exception in thread "main" java.lang.ClassCastException: class Computer5 cannot be cast to class Laptop5 (Computer5 and Laptop5 are in unnamed module of loader 'app')
+	at ComputerMain5.main(ComputerMain5.java:4)
+
+To decide type conversion we have to check is relation. Example
+Laptop is a Computer        Computer=Laptop ( conversion) 
+Is a relationship from down to up.
+public class Computer5{
+   
+   }
+
+   public class Laptop5 extends Computer5 {
+     public void processing(){
+     System.out.println("I am the processor of laptop");
+    }
+   }
+
+   public class ComputerMain5{
+     public static void main(String args[]){
+       Computer5 computer=new Computer5();
+       Laptop5 laptop=(Laptop5)computer; 
+       laptop.processing();   
+     }
+  }
+
+
