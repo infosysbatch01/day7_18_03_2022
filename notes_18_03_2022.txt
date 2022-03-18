@@ -1,0 +1,170 @@
+public class Numbers{
+  
+  private void add(int a,int b){}
+  private int add(int a,int b){}
+}
+// We have different return type in the above example
+// We don't consider return type to decide whether two or methods
+// are overloaded methods or not
+public class Numbers{
+  
+  private void add(int a,int b){}
+  private int add(float a,float b){}
+}// The above example is of method overloading.
+public class Numbers{
+  
+  private void add(int a,int b){}
+  private int add(int a,int b,int c){}
+}// The above example is of method overloading. 
+
+public class Numbers{
+  
+  private void add(int a,float b){}
+  private int add(float a,int b){}
+}// The above example is of method overloading.
+--------------------------------------------------------------------------------------------------
+String substring(int startIndex)
+String substring(int startIndex, int endIndex)
+------------------------------------------------------------------------------------------------------
+Whenever we are discussing dynamic polymorphism or method overriding we need to have Inheritance with the code.
+
+ class Person{
+    public void disp(){
+    System.out.println("I am the disp method of the base class");
+   }
+ }
+
+ class Employee extends Person {
+  public void disp(){
+    System.out.println("I am the disp method of the derived class");
+   }
+ }
+For method overriding:
+* methods will be having the same name in the Parent class and the Child class.
+* Return type will be same or of covariant type.
+* Number of parameters will be same.
+* The parameter's datatype will be same.
+
+public class Base1 {
+   public int calculate(int a,int b){   // overridden method
+    System.out.println("I am in the base class");
+    return a+b;
+   }
+ }
+
+public class Derived1 extends Base1 {
+  public int calculate(int x, int y){     // overriding method
+    System.out.println("I am the derived class");
+    return x*y;
+  }
+}
+
+
+public class Main1{
+   public static void main(String args[]){
+     Derived1 derived=new Derived1();
+     int res=derived.calculate(4,5);
+     // Derived class calculate method will override
+     // the base class calculate
+     System.out.println(res);
+    }
+  }
+----------------------------------------------------------------------------------------------------
+public class Base2 {
+   private int calculate(int a,int b){   // private method/methods are not overridden
+    System.out.println("I am in the base class");
+    return a+b;
+   }
+ }
+
+public class Derived2 extends Base2 {
+  public int calculate(int x, int y){     
+    System.out.println("I am the derived class");
+    return x*y;
+  }
+}
+
+
+public class Main2{
+   public static void main(String args[]){
+     Derived2 derived=new Derived2();
+     int res=derived.calculate(4,5);
+     System.out.println(res);
+    }
+  }
+------------------------------------------------------------------------------
+The access modifiers from most restricted to least restricted
+private======>default=======>protected=======>public
+When we go for method overriding the overridden method should have access specifier same as
+that of the overridden method or with more scope than the overridden method. The
+below code will show compilation error because the overridden method is having public scope
+where as overriding os having the restricted scope of default.
+public class Base3 {
+   public int calculate(int a,int b){   // private method/methods are not overridden
+    System.out.println("I am in the base class");
+    return a+b;
+   }
+ }
+
+public class Derived3 extends Base3 {
+   int calculate(int x, int y){     
+    System.out.println("I am the derived class");
+    return x*y;
+  }
+}
+--------------------------------------------------------------------
+The below code is fine as the overriding method is having higher scope of accessibility as 
+comparison to the overridden method.
+
+
+public class Base4 {
+    int calculate(int a,int b){   // private method/methods are not overridden
+    System.out.println("I am in the base class");
+    return a+b;
+   }
+ }
+
+public class Derived4 extends Base4 {
+   public int calculate(int x, int y){     
+    System.out.println("I am the derived class");
+    return x*y;
+  }
+}
+
+
+public class Main4{
+   public static void main(String args[]){
+     Derived4 derived=new Derived4();
+     int res=derived.calculate(4,5);
+     System.out.println(res);
+    }
+  }
+----------------------------------------------------------------------------
+
+public class Base5 {
+    int calculate(int a,int b){   // private method/methods are not overridden
+    System.out.println("I am in the base class");
+    return a+b;
+   }
+ }
+
+public class Derived5 extends Base5 {
+   public int calculate(int x, int y){     
+    System.out.println("I am the derived class");
+    return x*y;
+  }
+}
+
+
+public class Main5{
+   public static void main(String args[]){
+     Base5 base=new Base5();
+     int res=base.calculate(4,5);   // The base class calculate method is called
+     Derived5 derived=new Derived5();
+     res=derived.calculate(4,5);    // The derived class calculate method is called
+     System.out.println(res);
+     Base5 base2=new Derived5(); // Reference is of the base type and object is of the derived type
+     res=base2.calculate(10,10);   //In this line the Derived class calculate method is called
+     System.out.println(res);   
+    }
+  }
