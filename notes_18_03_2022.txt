@@ -377,4 +377,187 @@ public class Main6{
   }
  }
 -----------------------------------------------------------------------------------------
+All the classes in Java ( Pre defined or user defined ) are subclasses of Object class.
+So when we create our own class , that is also inherited class. In the following example
+though we are not writing Employee extends Object, then also Employee is a subclass of Object.
   
+  public class Employee {}
+---------------------------------------------------------------------------------------------
+  public class Person {}
+  public class Employee extends Person{}
+  
+   Object
+     |
+     |
+     |
+   Person
+     |
+     |
+     |
+  Employee
+As we dont have the concept of multiple inheritance but we have multi level inheritance. The
+above example is of multi level inheritance. So in the example above Person is extending Object
+and Employee is extending Person. So Employee is inheriting Object via Person class.
+   A    B
+     C
+public class A{}
+public class B{}
+public class C extends A,B {}  // we cannot have multiple inheritance in Java through classes.
+---------------------------------------------------------------------------------------------
+We have 8 Wrapper classes. String is not a wrapper class.
+Primitive          Wrapper Classes
+char               Character
+byte               Byte
+short              Short
+int                Integer
+float              Float
+double             Double
+boolean            Boolean
+---------------------------------------------------------------------------------------------------
+
+  public class Employee1{
+
+    private int id;
+    private String name;
+    private String desig;
+    private float basic;
+
+    public Employee1(int id, String name, String desig, float basic){
+     this.id=id;
+     this.name=name;
+     this.desig=desig;
+     this.basic=basic;
+    }
+ }
+
+ public class EmployeeMain1{
+    public static void main(String args[]) {
+       Employee1 emp1=new Employee1(1,"Ratish","Manager",34000);
+       Employee1 emp2=new Employee1(1,"Ratish","Manager",34000);
+       Employee1 emp3=new Employee1(2,"Javed","Manager",35000);
+       String str1="Hello";
+       String str2="Hello";
+       System.out.println(str1.equals(str2)); // true
+       System.out.println(str1==str2); // true because str1 and str2 are pointing to the same String literal
+       String str3=new String("Hello");
+       String str4=new String("Hello");
+       System.out.println(str3.equals(str4)); // true
+       System.out.println(str3==str4);    // false
+       System.out.println(emp1.equals(emp2)); // false because the equals method is inherited from 
+       // the Object class and equals method of the object class compares the reference and not the
+       // equality of the contenf
+       System.out.println(emp1==emp2); // false
+       System.out.println(emp1.hashCode()); // hashCode is a method which returns a number returned by 
+       // the JVM for unique identification of the object it is related to the address of the object        //created
+       System.out.println(emp2.hashCode());
+      // As the objects are different so hash value of the objects are also different but according
+      // to the specification if two objects are having the same content hashCode value should be 
+      // same.
+       System.out.println(emp1.toString());  //className@hexadecimal representation of the hashCode value
+       System.out.println(emp2.toString());
+       System.out.println(emp1);
+       System.out.println(emp2);
+     }
+  }
+ ---------------------------------------------------------------------------------------------
+public class Employee2{
+
+    private int id;
+    private String name;
+    private String desig;
+    private float basic;
+
+    public Employee2(int id, String name, String desig, float basic){
+     this.id=id;
+     this.name=name;
+     this.desig=desig;
+     this.basic=basic;
+     
+    }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Float.floatToIntBits(basic);
+		result = prime * result + ((desig == null) ? 0 : desig.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee2 other = (Employee2) obj;
+		if (Float.floatToIntBits(basic) != Float.floatToIntBits(other.basic))
+			return false;
+		if (desig == null) {
+			if (other.desig != null)
+				return false;
+		} else if (!desig.equals(other.desig))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		//return "Employee2 [id=" + id + ", name=" + name + ", desig=" + desig + ", basic=" + basic + "]";
+	     return "ID : "+id+"NAME :"+name+"DESIG :"+desig+"BASIC :"+basic;
+	}
+	
+	
+ }
+
+ public class EmployeeMain2{
+    public static void main(String args[]) {
+       Employee2 emp1=new Employee2(1,"Ratish","Manager",34000);
+       Employee2 emp2=new Employee2(1,"Ratish","Manager",34000);
+       Employee2 emp3=new Employee2(2,"Javed","Manager",35000);
+       String str1="Hello";
+       String str2="Hello";
+       System.out.println(str1.equals(str2)); // true
+       System.out.println(str1==str2); // true because str1 and str2 are pointing to the same String literal
+       String str3=new String("Hello");
+       String str4=new String("Hello");
+       System.out.println(str3.equals(str4)); // true
+       System.out.println(str3==str4);    // false
+       System.out.println(emp1.equals(emp2)); // true because the equals method we have
+       // overridden in the Employee class and these overridden method is checking for the content
+       // as the content of emp1 and emp2 are same, it is returning true
+       System.out.println(emp1==emp2); // false
+       System.out.println(emp1.hashCode()); // hashCode is a method which returns a number returned by 
+       // the JVM for unique identification of the object it is related to the address of the object        //created
+       System.out.println(emp2.hashCode());
+      // As the objects are different so hash value of the objects are also different but according
+      // to the specification if two objects are having the same content hashCode value should be 
+      // same.After overriding the hashCode method we are getting the same hashCode value 
+       // for the objects which are having the same data
+       System.out.println(emp1.toString());  //className@hexadecimal representation of the hashCode value
+       System.out.println(emp2.toString());
+       System.out.println(emp1); // If we are not overriding the toString method, this shows the classname@haxadecimal value for hashCode
+       System.out.println(emp2);
+       System.out.println(emp3);
+     }
+  }
+ 
+ -------------------------------------------------------------------------------------------
+POINTS TO REMEMBER related to hashcode:
+* The hashcode of two object are different as it includes memory address to generate the hashcode
+  value.
+* It is said that if two objects are having same content, hashcode values will be same for both the
+  objects. In java to implement this , we have override the hashCode method in our class.
+* If the hashcode is same , it is not guaranteed that the objects will be same.
+-------------------------------------------------------------------------------------------------- 
