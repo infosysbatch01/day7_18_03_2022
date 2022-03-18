@@ -623,3 +623,319 @@ public class WrapperDemo2 {
      System.out.println(num1+num2);  
      }
   }
+------------------------------------------------------------------------------------------------------
+
+
+ public class ReviseStatic1 {
+   int roll;
+   String name;
+   public static void main(String args[]){
+        System.out.println(roll);
+        System.out.println(name);
+   }
+  }
+
+  1) It will show the output as 0 and null
+  2) IT will show compilation error
+[Compilation error because main is static and we are trying to access non static instance variables]
+
+ public class ReviseStatic2 {
+   int roll;
+   String name;
+   public static void main(String args[]){
+         ReviseStatic2 rs=new ReviseStatic2();
+        System.out.println(rs.roll);
+        System.out.println(rs.name);
+   }
+  }
+  1) It will show the output as 0 and null
+  2) IT will show compilation error
+[Output will 0 and null
+
+ public class ReviseStatic3 {
+   int roll;
+   String name;
+   static int cname;
+   public static void main(String args[]){
+        ReviseStatic3 rs=new ReviseStatic3();
+        System.out.println(rs.roll);
+        System.out.println(rs.name);
+        System.out.println(cname);// The main and static cname are in the same class , so cname can be access without the class name or object in static method main
+        System.out.println(ReviseStatic3.cname);  //static can be accessed with the Classname
+        System.out.println(rs.cname);  // static can be accessed with the object also
+   }
+  }
+   
+1) It will show the output
+2) Compilation error
+
+  public class Data1 {
+   int roll;
+   String name;
+   static int cname;
+   }
+
+ public class ReviseStatic4 {
+  
+   public static void main(String args[]){
+        Data1 data=new Data1();
+        System.out.println(data.roll);
+        System.out.println(data.name);
+        System.out.println(cname);  // cname is in Data1 so we cannot access it without the classname
+        System.out.println(Data1.cname);  
+        System.out.println(data.cname);  
+  }
+
+
+ public class ReviseStatic5 {
+    public static int add(int a,int b){
+   return a+b;
+   }
+
+   public static void main(String args[]){
+    System.out.println(add(4,5));
+    //System.out.println(ReviseStatic5.add(3,3));  // This way of writing is not required as they are in same class          
+  }
+1) The output will be shown
+2) The compilation error
+
+
+ public class ReviseStatic5 {
+  private int a;
+  private int b;  
+  public static int add(int a,int b){
+   return a+b;
+   }
+  
+  public int add(){
+   return a+b;
+  }
+
+   public static void main(String args[]){
+    System.out.println(add(4,5));
+    System.out.println(add());  // non static method cannot be accessed within a static method without having the object of the class       
+  }
+
+
+
+
+ public class ReviseStatic6 {
+  private int a;
+  private int b;  
+  public static int add(int a,int b){
+   return a+b;
+   }
+  
+  public int add(){
+   return a+b;
+  }
+
+   public static void main(String args[]){
+    System.out.println(add(4,5));  //9
+
+    ReviseStatic6 rs=new ReviseStatic6();
+    System.out.println(rs.add());  //0     
+  }
+What will be the output
+
+ public class ReviseStatic7 {
+  private int a;
+  private int b;  
+  public static int add(int a,int b){
+      this.a=a;
+      this.b=b;
+     return this.a+this.b;
+   }
+  
+  public int add(){
+   return a+b;
+  }
+
+   public static void main(String args[]){
+    System.out.println(add(4,5));  
+
+    ReviseStatic7 rs=new ReviseStatic7();
+    System.out.println(rs.add());    
+  }
+-----------------
+
+ public class ReviseStatic8 {
+  private int a;
+  private int b;  
+  public int add(int a,int b){
+      this.a=a;
+      this.b=b;
+     return this.a+this.b;
+   }
+  
+  public int add(){
+   return a+b;
+  }
+
+   public static void main(String args[]){
+    eviseStatic8 rs=new ReviseStatic8();
+    System.out.println(rs.add(4,5));   //9
+    System.out.println(rs.add());      //9
+
+
+  }
+---------------------------------------------------------------------------
+public class ReviseStatic9 {
+  private int a;
+  private int b;  
+  public int add(int aa,int bb){
+     int a=aa;
+     int b=bb;
+     return a+b;
+   }
+  
+  public int add(){
+   return a+b;
+  }
+
+   public static void main(String args[]){
+    eviseStatic9 rs=new ReviseStatic9();
+    System.out.println(rs.add(4,5));   //9
+    System.out.println(rs.add());      //0 
+    }
+
+  }
+public class ReviseStatic10 {
+  private int a;
+  private int b;  
+  public int add(int a,int b){
+     int a=a;
+     int b=b;    // parameters are local and the variable declared within
+                 // method are also local . We cannot have same name in the same scope
+     return a+b;
+   }
+  
+  public int add(){
+   return a+b;
+  }
+
+   public static void main(String args[]){
+    eviseStatic10 rs=new ReviseStatic10();
+    System.out.println(rs.add(4,5));   
+    System.out.println(rs.add());      
+    }
+
+  }
+--------------------------------------------------------------------------------
+
+   public class FinalVariableDemo1 {
+    private final int a;
+   
+    public void disp() {
+    System.out.println(a);
+    }
+  }
+
+  public class FinalVariableDemoMain1{
+   public static void main(String args[]) {
+     FinalVariableDemo1 fvd=new FinalVariableDemo1();
+     fvd.disp();
+   }
+ }
+[ The above code will show compilation error because we have not initialised the final variable] 
+
+  public class FinalVariableDemo2 {
+    private final int a=10;
+   
+    public void disp() {
+    System.out.println(a);
+    }
+  }
+
+  public class FinalVariableDemoMain2{
+   public static void main(String args[]) {
+     FinalVariableDemo2 fvd=new FinalVariableDemo2();
+     fvd.disp();
+   }
+ }
+-------------------------------------------------------------------
+   // Either we initialise at the the place of declaration or within the constructor
+public class FinalVariableDemo3 {
+    private final int a;
+   
+    public FinalVariableDemo3(){
+     a=10;
+    }
+   
+    public void disp() {
+    System.out.println(a);
+    }
+  }
+
+  public class FinalVariableDemoMain3{
+   public static void main(String args[]) {
+     FinalVariableDemo3 fvd=new FinalVariableDemo3();
+     fvd.disp();
+   }
+ }
+
+------------------------------------------------------------------------
+
+public class FinalVariableDemo4 {
+    private final int a;
+   
+    public FinalVariableDemo4(){
+     a=10;
+    }
+   
+    public void disp() {
+    a=11;  // final variable cannot be reinitialised
+    System.out.println(a);
+    }
+  }
+
+  public class FinalVariableDemoMain4{
+   public static void main(String args[]) {
+     FinalVariableDemo4 fvd=new FinalVariableDemo4();
+     fvd.disp();
+   }
+ }
+
+----------------------------------------------------------------------------------------------
+// Final method cannot be overridden
+class A {
+	final public void example() {
+		System.out.println("A Class Method");
+	}
+}
+
+class B extends A {
+	@Override
+	public void example() {
+		System.out.println("B Class Method");
+	}
+
+}
+
+class Tester {
+	public static void main(String[] args) {
+		B obj = new B();
+		obj.example();
+	}
+
+}
+--------------------------------
+// We cannot inherit a final class
+final class A {
+}
+
+class B extends A {
+	void demo() {
+		System.out.println("In class B");
+	}
+}
+
+class Tester {
+	public static void main(String args[]) {
+		B obj = new B();
+		obj.demo();
+	}
+}
+---------------------------------------------
+The classes like String and Wrapper classes are final classes.
+---------------------------------------------------------------------------------
